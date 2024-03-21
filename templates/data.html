@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Channel Data</title>
+</head>
+<body>
+    <h1>Channel Data</h1>
+    <table border="1">
+        <tr>
+            <th>Channel Name</th>
+            <th>Subscribers</th>
+            <th>Views</th>
+            <th>Total Videos</th>
+        </tr>
+        {% for channel_data in stats_data %}
+        <tr>
+            <td>{{ channel_data.channel_name }}</td>
+            <td>{{ channel_data.subscriber }}</td>
+            <td>{{ channel_data.views }}</td>
+            <td>{{ channel_data.total_videos }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h1>Top 10 Videos</h1>
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>Published</th>
+            <th>Like Count</th>
+            <th>View Count</th>
+        </tr>
+        {% for index, video_data in video_data_df.iterrows() %}
+        <tr>
+            <td>{{ video_data['Title'] }}</td>
+            <td>{{ video_data['Published'] }}</td>
+            <td>{{ video_data['Like_Count'] }}</td>
+            <td>{{ video_data['View_Count'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>
