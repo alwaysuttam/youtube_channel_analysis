@@ -1,6 +1,6 @@
 from googleapiclient.discovery import build
 import pandas as pd
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 import ssl
 ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
@@ -14,25 +14,35 @@ api_key = 'AIzaSyAi59WP81vInKTCSjH-xqRXzknX-IcoOqk'
 # Create a service object for interacting with the YouTube Data API
 youtube = build('youtube', 'v3', developerKey=api_key)
 
+#playList_id= 'UUNU_lfiiWBdtULKOw6X0Dig'
+
 @app.route('/')
 def home():
     return render_template('index.html')
 
 @app.route('/data', methods=['GET', 'POST'])
 def get_channel_stats():
-    username = ['krishnaik06']
-    channel_ids = get_channel_id(username)
-    stats_data = get_channel_stats_data(youtube, channel_ids)
-    playList_id= 'UUNU_lfiiWBdtULKOw6X0Dig'
+    channel_id = request.form['message']
+    if not channel_id :
+        print("kindly provide a proper channel-Id")
+        return render_template('index.html')
+        
+    print("channel-id:", channel_id)
+    #channel_ids = get_channel_id(usernames)
+    stats_data = get_channael_stats(youtube, channel_id)
+    playList_id= stats_data [0]['channel_id']
     video_ids = get_video_ids(youtube, playList_id)
     all_video_data = get_video_details(youtube, video_ids)
-    video_data_df = pd.DataFrame(all_video_data)
+    #all_video_data['Published']=pd.to_datetime(all_video_data['Published']).dt.date
+    video_data_df = pd.DataFrame(all_video_data, columns=['Title', 'Published', 'Like_Count', 'View_Count'])
+    video_data_df.sort_values(by='View_Count', ascending=False).head(10)
 
-    # Sort by view count and get top 10 videos
-    top10_videos = video_data_df.sort_values(by='View_Count', ascending=False).head(10)
+   
+   
     return render_template('data.html', stats_data=stats_data, video_data_df=video_data_df)
 
 
+'''
 def get_channel_id(usernames):
     channel_ids = []
     for username in usernames:
@@ -45,24 +55,21 @@ def get_channel_id(usernames):
             channel_id = response['items'][0]['id']
             channel_ids.append(channel_id)
     return channel_ids
+'''
 
-def get_channel_stats_data(yt, channel_ids):
+def get_channael_stats(youtube,channel_id):
     all_data = []
-    for channel_id in channel_ids:
-        request = yt.channels().list(
-            part='snippet,contentDetails,statistics',
-            id=channel_id
-        )
-        response = request.execute()
-        for item in response['items']:
-            data = {
-                'channel_name': item['snippet']['title'],
-                'subscriber': item['statistics']['subscriberCount'],
-                'views': item['statistics']['viewCount'],
-                'total_videos': item['statistics']['videoCount'],
-                'playlist_id': item['contentDetails']['relatedPlaylists']['uploads']
-            }
-            all_data.append(data)
+    request = youtube.channels().list(part='snippet,contentDetails,statistics', id= channel_id)
+    response = request.execute()
+    for i in range (len(response['items'])):
+        data = dict(channel_name = response['items'][i]['snippet']['title'],
+                subscriber = response['items'][i]['statistics']['subscriberCount'],
+                Views = response['items'][i]['statistics']['viewCount'],
+                Total_videos = response['items'][i]['statistics']['videoCount'],
+                channel_id = response['items'][i]['contentDetails']['relatedPlaylists']['uploads'])
+        all_data.append(data)
+        
+
     return all_data
 
 
@@ -113,13 +120,9 @@ def get_video_details(youtube, video_ids):
             }
             all_video_data.append(video_stat)
     
-    # Create DataFrame
-    video_data_df = pd.DataFrame(all_video_data)
-
-    # Sort by view count and get top 10 videos
-    top10_videos = video_data_df.sort_values(by='View_Count', ascending=False).head(10)
     
     return all_video_data
+
 
 
 
