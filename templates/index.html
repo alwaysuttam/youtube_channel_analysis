@@ -50,6 +50,18 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+        /* Additional Styles */
+        .instructions {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .examples {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .examples p {
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
@@ -59,28 +71,19 @@
             <textarea name="message" rows="2" cols="10" placeholder="Provide channel ID"></textarea><br>
             <input type="submit" value="Fetch Data">
         </form>
-        <div class="container">
-            <h3>To fetch the channel ID:</h3>
-        <p>
-            
-             Go to the channel's home page.<br>
-                       
-             Right-click on the page and select "View Page Source".<br>
-                    
-             Search for "channel-id".<br>
-
-        </p>
-        <h3>Below are some examples along with channel names:<br></h3>
-
-        <p> 
-
-            - UCCWi3hpnq_Pe03nGxuS7isg -- campusX<br>
-            - UCh9nVJoWXmFb7sLApWGcLPQ -- codebasics<br>
-            - UCcIXc5mJsHVYTZR1maL5l9w -- deeplearnindai<br>
-            - UCNU_lfiiWBdtULKOw6X0Dig -- Krish Naik<br>
-
-        </p>
-    </div>
+        <div class="instructions">
+            <h3>Instructions to fetch the channel ID:</h3>
+            <p>1. Go to the channel's home page.</p>
+            <p>2. Right-click on the page and select "View Page Source".</p>
+            <p>3. Search for "channel-id".</p>
+        </div>
+        <div class="examples">
+            <h3>Below are some examples along with channel names:</h3>
+            <p>- UCCWi3hpnq_Pe03nGxuS7isg -- campusX</p>
+            <p>- UCh9nVJoWXmFb7sLApWGcLPQ -- codebasics</p>
+            <p>- UCcIXc5mJsHVYTZR1maL5l9w -- deeplearnindai</p>
+            <p>- UCNU_lfiiWBdtULKOw6X0Dig -- Krish Naik</p>
+        </div>
     </div>
 </body>
 </html>

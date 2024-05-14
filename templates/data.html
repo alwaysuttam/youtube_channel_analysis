@@ -9,10 +9,18 @@
             padding: 0;
             background-color: #f0f0f0;
         }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
         h1 {
-            margin-top: 30px;
+            margin-top: 0;
             margin-bottom: 20px;
-            font-size: 24px;
+            font-size: 28px;
             text-align: center;
             color: #333;
         }
@@ -22,7 +30,7 @@
             margin-bottom: 30px;
         }
         th, td {
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
             text-align: left;
         }
@@ -44,43 +52,44 @@
     </style>
 </head>
 <body>
-    <h1>Basic Stats</h1>
-    <table>
-        <tr>
-            <th>Channel Name</th>
-            <th>Subscribers</th>
-            <th>Views</th>
-            <th>Total Videos</th>
-        </tr>
-        {% for channel_data in stats_data %}
-        <tr>
-            <td>{{ channel_data.channel_name }}</td>
-            <td>{{ channel_data.subscriber }}</td>
-            <td>{{ channel_data.Views }}</td>
-            <td>{{ channel_data.Total_videos }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <h1>Complete video Data</h1>
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Published</th>
-            <th>Like Count</th>
-            <th>View Count</th>
-        </tr>
-        {% for index, video_data in video_data_df.iterrows() %}
-        <tr>
-            <td>{{ video_data['Title'] }}</td>
-            <td>{{ video_data['Published'] }}</td>
-            <td>{{ video_data['Like_Count'] }}</td>
-            <td>{{ video_data['View_Count'] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <p>
-        This is the channel statistics page displaying basic stats and complete video data. 
-    </p>
+    <div class="container">
+        <h1>Basic Stats</h1>
+        <table>
+            <tr>
+                <th>Channel Name</th>
+                <th>Subscribers</th>
+                <th>Views</th>
+                <th>Total Videos</th>
+            </tr>
+            {% for channel_data in stats_data %}
+            <tr>
+                <td>{{ channel_data.channel_name }}</td>
+                <td>{{ channel_data.subscriber }}</td>
+                <td>{{ channel_data.Views }}</td>
+                <td>{{ channel_data.Total_videos }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <h1>Complete Video Data</h1>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Published</th>
+                <th>Like Count</th>
+                <th>View Count</th>
+            </tr>
+            {% for index, video_data in video_data_df.iterrows() %}
+            <tr>
+                <td>{{ video_data['Title'] }}</td>
+                <td>{{ video_data['Published'] }}</td>
+                <td>{{ video_data['Like_Count'] }}</td>
+                <td>{{ video_data['View_Count'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <p>
+            This is the channel statistics page displaying basic stats and complete video data. 
+        </p>
+    </div>
 </body>
-
 </html>
