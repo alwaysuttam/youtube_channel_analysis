@@ -22,7 +22,8 @@ This web application allows users to retrieve and display statistics for a given
 
 1. Clone the Repository:
    
-   git clone https://github.com/yourusername/youtube-channel-stats.git
+   git clone https://github.com/uttam-bn/youtube_channel_analysis.git
+   
    cd youtube-channel-stats
 
 2. Install the Required Packages    
